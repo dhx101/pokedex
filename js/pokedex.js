@@ -1,56 +1,111 @@
-const pokeApi = async () => {
-	const pokemon = await getInfo();
-	pintarPokemon(pokemon);
-};
+const generations = [
+	{ gen: 1, a: 1, b: 151 },
+	{ gen: 2, a: 152, b: 251 },
+	{ gen: 3, a: 252, b: 386 },
+	{ gen: 4, a: 387, b: 493 },
+	{ gen: 5, a: 494, b: 649 },
+	{ gen: 6, a: 650, b: 721 },
+	{ gen: 7, a: 722, b: 809 },
+	{ gen: 8, a: 810, b: 905 },
+	{ gen: 9, a: 906, b: 1017 },
+];
 
-const getInfo = async () => {
+const getInfo = async (a, b) => {
 	try {
-		let results = [];
-		for (let i = 1; i <= 151; i++) {
+		let resultsArray = [];
+		for (let i = 0 + a; i <= b; i++) {
 			let resultado = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
+			let resultadoFlavor = await fetch(
+				`https://pokeapi.co/api/v2/pokemon-species/${i}`
+			);
 			let resultadoJson = await resultado.json();
-			results.push(resultadoJson);
+			let flavorJson = await resultadoFlavor.json();
+			let results = { ...resultadoJson, ...flavorJson };
+			// console.log(results);
+			resultsArray.push(results);
 		}
-		let pokemon = results.map((item)=> ({
+		let pokemon = resultsArray.map((item) => ({
 			name: item.name,
-			image: item.sprites['front_default'],
+			image: item.sprites["front_default"],
 			type: item.types.map((type) => type.type.name),
-			id: item.id}))
+			id: item.id,
+			flavorText: item.flavor_text_entries[0].flavor_text,
+		}));
+		// console.log(pokemon);
 		return pokemon;
 	} catch (error) {
 		console.log(error);
 	}
 };
 
-
-
-
-const pintarPokemon = (pokemon) => {
-	const myOl = document.querySelector("#pokedex");
-	console.log(pokemon);
-	pokemon.forEach((item) => {
+const myOl = document.querySelector("#pokedex");
+const pintarPokemon = (pintar) => {
+	console.log(pintar);
+	pintar.forEach((item) => {
 		let li$$ = document.createElement("li");
-		li$$.classList.add("card");
-
 		let h4$$ = document.createElement("h4");
-		h4$$.textContent = item.name
-		h4$$.classList.add("card-title")
-
 		let sprite$$ = document.createElement("img");
+		let p1$$ = document.createElement("p");
+		let p2$$ = document.createElement("p");
+		let span$$ = document.createElement("span");
+
+		li$$.classList.add("card");
+		h4$$.textContent = item.name;
+		h4$$.classList.add("card-title");
 		sprite$$.setAttribute("src", item.image);
 		sprite$$.setAttribute("alt", item.name);
-		sprite$$.classList.add("card-image")
+		sprite$$.classList.add("card-image");
 
-		let p$$ = document.createElement("p");
-		p$$.textContent = item.type
-		p$$.classList.add("card-subtitle")
+		p1$$.textContent = item.type[0];
+		p2$$.textContent = item.type[1];
+		p1$$.classList.add("card-subtitle");
+		p2$$.classList.add("card-subtitle");
+
+		p1$$.classList.add(item.type[0]);
+		p2$$.classList.add(item.type[1]);
 
 		myOl.appendChild(li$$);
 		li$$.appendChild(h4$$);
-		
 		li$$.appendChild(sprite$$);
-		li$$.appendChild(p$$);
+		li$$.appendChild(span$$);
+		span$$.appendChild(p1$$);
+		if (item.type[1] != undefined) {
+			span$$.appendChild(p2$$);
+		}
 	});
 };
 
-pokeApi();
+const pokeApi = async (a, b) => {
+	console.log("Fetching...");
+	const pokemon = await getInfo(a, b);
+	console.log("Painting...");
+	pintarPokemon(pokemon);
+	console.log("finished");
+};
+
+const deletePokedex = () => {
+	while (myOl.firstChild) {
+		myOl.removeChild(myOl.lastChild);
+	  }
+}
+
+const generateSelector= () => {
+	let myUl = document.querySelector(".header-list")
+	for (i = 0; i < 9; i++) {
+		let myLi$$ = document.createElement('li')
+		myLi$$.classList.add('header-list-drop__item')
+		myLi$$.textContent = `Generation ${i+1}`
+		myUl.appendChild(myLi$$)
+		let a = generations[i].a
+		let b = generations[i].b
+		console.log(a,b);
+		myLi$$.addEventListener("click", ()=> {
+			deletePokedex()
+			pokeApi(a, b)
+		})
+	}
+}
+
+pokeApi(1, 151);
+generateSelector()
+
