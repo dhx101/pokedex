@@ -1,9 +1,9 @@
 .pokeball {
-	position: sticky;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	position: absolute;
 	display: none;
+	align-items: center;
+	justify-content: center;
+	z-index: 10;
 	width: 192px;
 	height: 192px;
 	background: radial-gradient(
@@ -17,8 +17,36 @@
 	border-radius: 50%;
 	border: 8px solid black;
 }
+
+.loading {
+	animation: loading 1s infinite;
+}
+
+.visible {
+	display: flex;
+}
+
 .background {
+	position: absolute;
+	top: 50vh;
+	left: 50vw;
+	transform: translate(-50%,-50%);
 	display: grid;
 	justify-items: center;
 	align-items: center;
+}
+
+@keyframes loading {
+	25% {
+		transform: rotate(60deg);
+	}
+	50% {
+		transform: rotate(120deg);
+	}
+	75% {
+		transform: rotate(240deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }

@@ -1,0 +1,21 @@
+.footer {
+    position: absolute;
+    display: flex;
+   
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(200, 200, 200);
+    height: 10vh;
+    width: 100%;
+    bottom: 0px;
+    &-info {
+        color: black;
+        font-size: 1.2rem;
+        font-weight: 700;
+        a{
+            font-size: 1.2rem;
+            color: black;
+            font-weight: 700;
+        }
+    }
+}

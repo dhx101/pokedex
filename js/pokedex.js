@@ -152,7 +152,7 @@ const generateTypeSelector = (pokemonArray) => {
 		myLi$$.classList.add(types[i]);
 		myLi$$.classList.add("header-type-list__item");
 		myP$$.textContent = types[i];
-		
+
 		myUl.appendChild(myLi$$);
 		myLi$$.appendChild(myImg$$);
 		myLi$$.appendChild(myP$$);
@@ -184,19 +184,20 @@ const generateInput = (pokemon) => {
 	});
 };
 const loadingAnimation = () => {
-	const pokeball = document.querySelector(".pokeball");
-	pokeball.classList.toggle("visible");
+	const pokeball = document.querySelector('.pokeball')
+	pokeball.classList.toggle('visible')
+	pokeball.classList.toggle('loading')
 };
 
 const pokeApi = async (a, b) => {
-	console.log("fetching...");
+	loadingAnimation();
 	const pokemon = await getInfo(a, b);
-	console.log("Painting...");
+	loadingAnimation();
 	pintarPokemon(pokemon);
-
 	generateGenSelector(pokemon);
 	generateTypeSelector(pokemon);
 	generateInput(pokemon);
 };
 
 pokeApi(1, 151);
+

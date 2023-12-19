@@ -20,7 +20,7 @@
      -moz-user-select: none;
           user-select: none;
   cursor: pointer;
-  padding: 15px 20px;
+  padding: 15px 50px;
   color: black;
   font-weight: 700;
   background-color: white;
@@ -65,11 +65,11 @@
 }
 
 .pokeball {
-  position: sticky;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
   display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
   width: 192px;
   height: 192px;
   background: radial-gradient(white 16px, black 17px 18px, white 19px 24px, black 25px 32px, transparent 33px), linear-gradient(to bottom, red 0 80px, black 81px 96px, white 97px 100%);
@@ -77,12 +77,38 @@
   border: 8px solid black;
 }
 
+.loading {
+  animation: loading 1s infinite;
+}
+
+.visible {
+  display: flex;
+}
+
 .background {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
   display: grid;
   justify-items: center;
   align-items: center;
 }
 
+@keyframes loading {
+  25% {
+    transform: rotate(60deg);
+  }
+  50% {
+    transform: rotate(120deg);
+  }
+  75% {
+    transform: rotate(240deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 @keyframes bounce {
   20% {
     transform: translateY(-6px);
@@ -127,6 +153,8 @@
   gap: 25%;
 }
 .type span {
+  display: flex;
+  gap: 10px;
   padding: 10px 16px;
   min-width: 100px;
   max-width: 120px;
@@ -246,6 +274,27 @@ span {
 
 .fairy {
   background-color: #e9e;
+}
+
+.footer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(200, 200, 200);
+  height: 10vh;
+  width: 100%;
+  bottom: 0px;
+}
+.footer-info {
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.footer-info a {
+  font-size: 1.2rem;
+  color: black;
+  font-weight: 700;
 }
 
 * {
