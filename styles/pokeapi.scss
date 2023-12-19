@@ -17,6 +17,9 @@ $background-color_2: #f4f4f4;
 	list-style: none;
 }
 body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 	background-color: $background-color_1;
 	margin: 0;
 	font-family: $font-family_1;

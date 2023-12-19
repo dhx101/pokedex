@@ -31,16 +31,16 @@
   color: white;
 }
 .header-type-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-gap: 20px;
   padding: 0 10vw;
 }
 .header-type-list__item {
   display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   gap: 15px;
-  text-align: center;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
@@ -62,6 +62,7 @@
 }
 .header-search {
   height: 40px;
+  padding: 0 10vw;
 }
 
 .pokeball {
@@ -277,10 +278,10 @@ span {
 }
 
 .footer {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: auto;
   background-color: rgb(200, 200, 200);
   height: 10vh;
   width: 100%;
@@ -305,6 +306,9 @@ span {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   background-color: orangered;
   margin: 0;
   font-family: rubik;

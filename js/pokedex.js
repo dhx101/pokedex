@@ -183,16 +183,20 @@ const generateInput = (pokemon) => {
 		pintarPokemon(filteredPokemon);
 	});
 };
-const loadingAnimation = () => {
+const loadingAnimationAdd = () => {
 	const pokeball = document.querySelector('.pokeball')
-	pokeball.classList.toggle('visible')
-	pokeball.classList.toggle('loading')
+	pokeball.classList.add('visible')
+	pokeball.classList.add('loading')
 };
-
+const loadingAnimationRemove = () => {
+	const pokeball = document.querySelector('.pokeball')
+	pokeball.classList.remove('visible')
+	pokeball.classList.remove('loading')
+};
 const pokeApi = async (a, b) => {
-	loadingAnimation();
+	loadingAnimationAdd();
 	const pokemon = await getInfo(a, b);
-	loadingAnimation();
+	loadingAnimationRemove();
 	pintarPokemon(pokemon);
 	generateGenSelector(pokemon);
 	generateTypeSelector(pokemon);
