@@ -9,22 +9,43 @@ const generations = [
 	{ gen: 8, a: 810, b: 905 },
 	{ gen: 9, a: 906, b: 1017 },
 ];
-
+const types = [
+	"normal",
+	"fire",
+	"water",
+	"electric",
+	"grass",
+	"ice",
+	"fighting",
+	"poison",
+	"ground",
+	"flying",
+	"psychic",
+	"bug",
+	"rock",
+	"ghost",
+	"dragon",
+	"dark",
+	"steel",
+	"fairy",
+];
 const getInfo = async (a, b) => {
 	try {
-		let resultsArray = [];
+		const resultsArray = [];
 		for (let i = 0 + a; i <= b; i++) {
-			let resultado = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
-			let resultadoFlavor = await fetch(
+			const resultado = await fetch(
+				`https://pokeapi.co/api/v2/pokemon/${i}`
+			);
+			const resultadoFlavor = await fetch(
 				`https://pokeapi.co/api/v2/pokemon-species/${i}`
 			);
-			let resultadoJson = await resultado.json();
-			let flavorJson = await resultadoFlavor.json();
-			let results = { ...resultadoJson, ...flavorJson };
+			const resultadoJson = await resultado.json();
+			const flavorJson = await resultadoFlavor.json();
+			const results = { ...resultadoJson, ...flavorJson };
 			// console.log(results);
 			resultsArray.push(results);
 		}
-		let pokemon = resultsArray.map((item) => ({
+		const pokemon = resultsArray.map((item) => ({
 			name: item.name,
 			image: item.sprites["front_default"],
 			type: item.types.map((type) => type.type.name),
@@ -39,15 +60,20 @@ const getInfo = async (a, b) => {
 };
 
 const myOl = document.querySelector("#pokedex");
-const pintarPokemon = (pintar) => {
-	console.log(pintar);
-	pintar.forEach((item) => {
-		let li$$ = document.createElement("li");
-		let h4$$ = document.createElement("h4");
-		let sprite$$ = document.createElement("img");
-		let p1$$ = document.createElement("p");
-		let p2$$ = document.createElement("p");
-		let span$$ = document.createElement("span");
+
+const pintarPokemon = (pokemonPintar) => {
+	// console.log(pokemonPintar);
+	pokemonPintar.forEach((item) => {
+		const li$$ = document.createElement("li");
+		const h4$$ = document.createElement("h4");
+		const sprite$$ = document.createElement("img");
+		const div$$ = document.createElement("div");
+		const span1$$ = document.createElement("span");
+		const i1$$ = document.createElement("img");
+		const p1$$ = document.createElement("p");
+		const span2$$ = document.createElement("span");
+		const i2$$ = document.createElement("img");
+		const p2$$ = document.createElement("p");
 
 		li$$.classList.add("card");
 		h4$$.textContent = item.name;
@@ -56,56 +82,121 @@ const pintarPokemon = (pintar) => {
 		sprite$$.setAttribute("alt", item.name);
 		sprite$$.classList.add("card-image");
 
+		div$$.classList.add("type");
+
+		i1$$.setAttribute("src", `../svg/${item.type[0]}.svg`);
+		i1$$.setAttribute("alt", item.type[0]);
 		p1$$.textContent = item.type[0];
-		p2$$.textContent = item.type[1];
 		p1$$.classList.add("card-subtitle");
+
+		i2$$.setAttribute("src", `../svg/${item.type[1]}.svg`);
+		i2$$.setAttribute("alt", item.type[1]);
+		p2$$.textContent = item.type[1];
 		p2$$.classList.add("card-subtitle");
 
-		p1$$.classList.add(item.type[0]);
-		p2$$.classList.add(item.type[1]);
+		span1$$.classList.add(item.type[0]);
+		span2$$.classList.add(item.type[1]);
 
 		myOl.appendChild(li$$);
 		li$$.appendChild(h4$$);
 		li$$.appendChild(sprite$$);
-		li$$.appendChild(span$$);
-		span$$.appendChild(p1$$);
+		li$$.appendChild(div$$);
+		div$$.appendChild(span1$$);
+
+		span1$$.appendChild(i1$$);
+		span1$$.appendChild(p1$$);
 		if (item.type[1] != undefined) {
-			span$$.appendChild(p2$$);
+			div$$.appendChild(span2$$);
+			span2$$.appendChild(i2$$);
+			span2$$.appendChild(p2$$);
 		}
 	});
-};
-
-const pokeApi = async (a, b) => {
-	console.log("Fetching...");
-	const pokemon = await getInfo(a, b);
-	console.log("Painting...");
-	pintarPokemon(pokemon);
-	console.log("finished");
 };
 
 const deletePokedex = () => {
 	while (myOl.firstChild) {
 		myOl.removeChild(myOl.lastChild);
-	  }
-}
-
-const generateSelector= () => {
-	let myUl = document.querySelector(".header-list")
-	for (i = 0; i < 9; i++) {
-		let myLi$$ = document.createElement('li')
-		myLi$$.classList.add('header-list-drop__item')
-		myLi$$.textContent = `Generation ${i+1}`
-		myUl.appendChild(myLi$$)
-		let a = generations[i].a
-		let b = generations[i].b
-		console.log(a,b);
-		myLi$$.addEventListener("click", ()=> {
-			deletePokedex()
-			pokeApi(a, b)
-		})
 	}
-}
+};
+
+const generateGenSelector = () => {
+	const myUl = document.querySelector(".header-gen-list");
+	while (myUl.firstChild) {
+		myUl.removeChild(myUl.lastChild);
+	}
+	for (let i = 0; i < 8; i++) {
+		const myLi$$ = document.createElement("li");
+		myLi$$.classList.add("header-gen-list__item");
+		myLi$$.textContent = `Gen ${i + 1}`;
+		myUl.appendChild(myLi$$);
+		const a = generations[i].a;
+		const b = generations[i].b;
+		// console.log(a, b);
+		myLi$$.addEventListener("click", () => {
+			deletePokedex();
+			pokeApi(a, b);
+		});
+	}
+};
+const generateTypeSelector = (pokemonArray) => {
+	const myUl = document.querySelector(".header-type-list");
+	while (myUl.firstChild) {
+		myUl.removeChild(myUl.lastChild);
+	}
+	for (let i = 0; i < types.length; i++) {
+		const myLi$$ = document.createElement("li");
+		const myImg$$ = document.createElement("img");
+		const myP$$ = document.createElement("p");
+
+		myImg$$.setAttribute("src", `../svg/${types[i]}.svg`);
+		myLi$$.classList.add(types[i]);
+		myLi$$.classList.add("header-type-list__item");
+		myP$$.textContent = types[i];
+		
+		myUl.appendChild(myLi$$);
+		myLi$$.appendChild(myImg$$);
+		myLi$$.appendChild(myP$$);
+		myLi$$.addEventListener("click", () => {
+			console.log(myLi$$.classList[0] == types[i]);
+			const filteredPokemon = pokemonArray.filter((item) =>
+				item.type[0].toLowerCase().includes(myLi$$.classList[0])
+			);
+			deletePokedex();
+			pintarPokemon(filteredPokemon);
+		});
+	}
+};
+
+const generateInput = (pokemon) => {
+	const myDiv$$ = document.querySelector(".header-search");
+	while (myDiv$$.firstChild) {
+		myDiv$$.removeChild(myDiv$$.lastChild);
+	}
+	const input$$ = document.createElement("input");
+	input$$.setAttribute("type", "text");
+	myDiv$$.appendChild(input$$);
+	input$$.addEventListener("input", () => {
+		const filteredPokemon = pokemon.filter((item) =>
+			item.name.toLowerCase().includes(input$$.value.toLowerCase())
+		);
+		deletePokedex();
+		pintarPokemon(filteredPokemon);
+	});
+};
+const loadingAnimation = () => {
+	const pokeball = document.querySelector(".pokeball");
+	pokeball.classList.toggle("visible");
+};
+
+const pokeApi = async (a, b) => {
+	console.log("fetching...");
+	const pokemon = await getInfo(a, b);
+	console.log("Painting...");
+	pintarPokemon(pokemon);
+
+	generateGenSelector(pokemon);
+	generateTypeSelector(pokemon);
+	generateInput(pokemon);
+};
 
 pokeApi(1, 151);
-generateSelector()
-

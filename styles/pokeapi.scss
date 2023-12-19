@@ -1,0 +1,28 @@
+$color_1: white;
+$color_2: #222;
+$font-family_1: rubik;
+$font-family_2: "Fira Sans", sans-serif;
+$background-color_1: orangered;
+$background-color_2: #f4f4f4;
+
+@import "./header";
+@import "./pokeball";
+@import "./pokedex";
+@import "./types";
+
+* {
+    padding: 0;
+    margin: 0;
+	box-sizing: border-box;
+	list-style: none;
+}
+body {
+	background-color: $background-color_1;
+	margin: 0;
+	font-family: $font-family_1;
+	color: $color_1;
+}
+
+
+
+
