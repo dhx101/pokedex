@@ -25,8 +25,12 @@
 #pokedex {
 	padding-inline-start: 0;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	grid-template-columns: 1fr;
 	grid-gap: 20px;
+	@media only screen and (min-width: 425px) {
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+	}
 }
 .card-subtitle {
 	color: $color_1;
@@ -55,6 +59,8 @@
 .container {
 	padding: 40px;
 	margin: 0 auto;
+	background: rgb(0, 0, 0);
+	min-width: 100vh;
 }
 h1 {
 	text-transform: uppercase;
@@ -67,6 +73,8 @@ h1 {
 	background-color: $background-color_2;
 	color: $color_2;
 	text-align: center;
+	border: 5px solid rgba(0, 0, 0, 0.2);
+	border-radius: 15px;
 	&:hover {
 		animation: bounce 0.5s linear;
 		.card-image {

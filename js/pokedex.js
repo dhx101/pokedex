@@ -28,6 +28,7 @@ const types = [
 	"dark",
 	"steel",
 	"fairy",
+	"all",
 ];
 const getInfo = async (a, b) => {
 	try {
@@ -42,17 +43,22 @@ const getInfo = async (a, b) => {
 			const resultadoJson = await resultado.json();
 			const flavorJson = await resultadoFlavor.json();
 			const results = { ...resultadoJson, ...flavorJson };
-			// console.log(results);
+
 			resultsArray.push(results);
 		}
+		console.log(resultsArray);
 		const pokemon = resultsArray.map((item) => ({
 			name: item.name,
 			image: item.sprites["front_default"],
+			shiny: item.sprites["front_shiny"],
 			type: item.types.map((type) => type.type.name),
 			id: item.id,
+			stats: item.stats,
+			peso: item.weight,
+			altura: item.height,
 			flavorText: item.flavor_text_entries[0].flavor_text,
 		}));
-		// console.log(pokemon);
+		console.log(pokemon);
 		return pokemon;
 	} catch (error) {
 		console.log(error);
@@ -110,6 +116,57 @@ const pintarPokemon = (pokemonPintar) => {
 			span2$$.appendChild(i2$$);
 			span2$$.appendChild(p2$$);
 		}
+		li$$.addEventListener("click", () => {
+			const myModal$$ =document.querySelector('.modal')
+			const popUpContainer = document.querySelector(".popUpContainer");
+
+			deleteAllChilds(popUpContainer);
+			myModal$$.classList.add("popup-visible");
+
+			const pokedexNameIdContainer = document.createElement("div");
+			const pokedexH2 = document.createElement("h2");
+			const pokedexId = document.createElement("p");
+			const pokedexH4 = document.createElement("h4");
+			const pokedexSprite = document.createElement("img");
+			const pokedexAltura = document.createElement("p");
+			const pokedexPeso = document.createElement("p");
+			const pokedexFlavor = document.createElement("p");
+			const closeIcon = document.createElement("button");
+
+			pokedexH2.textContent = "Pokedex";
+			closeIcon.textContent = "×";
+			closeIcon.classList.add('popUpContainer__close')
+			pokedexNameIdContainer.classList.add("popUpContainer-nameId");
+			pokedexId.textContent = `Nº ${item.id}`;
+			pokedexH4.textContent = item.name;
+			pokedexSprite.setAttribute("src", item.image);
+			pokedexSprite.setAttribute("alt", item.name);
+			pokedexSprite.classList.add("popUpContainer__sprite");
+			let alturaEnMetros = Math.round(item.altura).toFixed(1);
+			pokedexAltura.textContent = `Altura: ${alturaEnMetros} m.`;
+			pokedexAltura.classList.add("popUpContainer__height");
+			let pesoEnKg = (item.peso / 10).toFixed(1);
+			pokedexPeso.textContent = `Peso: ${pesoEnKg} Kg.`;
+			pokedexPeso.classList.add("popUpContainer__weight");
+			let changedFlavorText  = item.flavorText.replace('', " ")
+			pokedexFlavor.textContent = changedFlavorText
+			pokedexFlavor.classList.add("popUpContainer__flavor");
+
+			popUpContainer.appendChild(pokedexH2);
+			popUpContainer.appendChild(closeIcon)
+			popUpContainer.appendChild(pokedexNameIdContainer);
+			pokedexNameIdContainer.appendChild(pokedexId);
+			pokedexNameIdContainer.appendChild(pokedexH4);
+			popUpContainer.appendChild(pokedexAltura);
+			popUpContainer.appendChild(pokedexPeso);
+			popUpContainer.appendChild(pokedexSprite);
+			popUpContainer.appendChild(pokedexFlavor);
+
+			closeIcon.addEventListener("click", () => {
+				myModal$$.classList.remove("popup-visible")
+
+			});
+		});
 	});
 };
 
@@ -118,17 +175,21 @@ const deletePokedex = () => {
 		myOl.removeChild(myOl.lastChild);
 	}
 };
-
 const generateGenSelector = () => {
-	const myUl = document.querySelector(".header-gen-list");
-	while (myUl.firstChild) {
-		myUl.removeChild(myUl.lastChild);
-	}
+	const myDiv$$ = document.querySelector(".header-gen");
+	deleteAllChilds(myDiv$$);
+	const myP$$ = document.createElement("p");
+	myP$$.classList.add("header-gen__dropdown");
+	myP$$.textContent = "Sort by Generation";
+	const myList$$ = document.createElement("ul");
+	myList$$.classList.add("header-gen-list");
+	myDiv$$.appendChild(myP$$);
+	myDiv$$.appendChild(myList$$);
 	for (let i = 0; i < 8; i++) {
 		const myLi$$ = document.createElement("li");
 		myLi$$.classList.add("header-gen-list__item");
 		myLi$$.textContent = `Gen ${i + 1}`;
-		myUl.appendChild(myLi$$);
+		myList$$.appendChild(myLi$$);
 		const a = generations[i].a;
 		const b = generations[i].b;
 		// console.log(a, b);
@@ -137,12 +198,20 @@ const generateGenSelector = () => {
 			pokeApi(a, b);
 		});
 	}
+	myP$$.addEventListener("click", () => {
+		myList$$.classList.toggle("list-visible-gen");
+	});
 };
 const generateTypeSelector = (pokemonArray) => {
-	const myUl = document.querySelector(".header-type-list");
-	while (myUl.firstChild) {
-		myUl.removeChild(myUl.lastChild);
-	}
+	const myDiv$$ = document.querySelector(".header-type");
+	deleteAllChilds(myDiv$$);
+	const myP$$ = document.createElement("p");
+	myP$$.classList.add("header-type__dropdown");
+	myP$$.textContent = "Sort by Type";
+	const myList$$ = document.createElement("ul");
+	myList$$.classList.add("header-type-list");
+	myDiv$$.appendChild(myP$$);
+	myDiv$$.appendChild(myList$$);
 	for (let i = 0; i < types.length; i++) {
 		const myLi$$ = document.createElement("li");
 		const myImg$$ = document.createElement("img");
@@ -153,28 +222,39 @@ const generateTypeSelector = (pokemonArray) => {
 		myLi$$.classList.add("header-type-list__item");
 		myP$$.textContent = types[i];
 
-		myUl.appendChild(myLi$$);
+		myList$$.appendChild(myLi$$);
 		myLi$$.appendChild(myImg$$);
 		myLi$$.appendChild(myP$$);
 		myLi$$.addEventListener("click", () => {
-			console.log(myLi$$.classList[0] == types[i]);
-			const filteredPokemon = pokemonArray.filter((item) =>
-				item.type[0].toLowerCase().includes(myLi$$.classList[0])
-			);
-			deletePokedex();
-			pintarPokemon(filteredPokemon);
+			if (types[i] != "all") {
+				console.log(myLi$$.classList[0] == types[i]);
+				const filteredPokemon = pokemonArray.filter((item) =>
+					item.type[0].toLowerCase().includes(myLi$$.classList[0])
+				);
+				deletePokedex();
+				pintarPokemon(filteredPokemon);
+			} else {
+				deletePokedex();
+				pintarPokemon(pokemonArray);
+			}
 		});
 	}
+	myP$$.addEventListener("click", () => {
+		myList$$.classList.toggle("list-visible-type");
+	});
 };
-
 const generateInput = (pokemon) => {
 	const myDiv$$ = document.querySelector(".header-search");
-	while (myDiv$$.firstChild) {
-		myDiv$$.removeChild(myDiv$$.lastChild);
-	}
+	deleteAllChilds(myDiv$$);
 	const input$$ = document.createElement("input");
+	const label$$ = document.createElement("label");
 	input$$.setAttribute("type", "text");
+	input$$.setAttribute("id", "search-bar");
+	label$$.textContent = "Search by Name";
+	label$$.setAttribute("for", "search-bar");
+	myDiv$$.appendChild(label$$);
 	myDiv$$.appendChild(input$$);
+
 	input$$.addEventListener("input", () => {
 		const filteredPokemon = pokemon.filter((item) =>
 			item.name.toLowerCase().includes(input$$.value.toLowerCase())
@@ -184,14 +264,19 @@ const generateInput = (pokemon) => {
 	});
 };
 const loadingAnimationAdd = () => {
-	const pokeball = document.querySelector('.pokeball')
-	pokeball.classList.add('visible')
-	pokeball.classList.add('loading')
+	const pokeball = document.querySelector(".pokeball");
+	pokeball.classList.add("visible");
+	pokeball.classList.add("loading");
 };
 const loadingAnimationRemove = () => {
-	const pokeball = document.querySelector('.pokeball')
-	pokeball.classList.remove('visible')
-	pokeball.classList.remove('loading')
+	const pokeball = document.querySelector(".pokeball");
+	pokeball.classList.remove("visible");
+	pokeball.classList.remove("loading");
+};
+const deleteAllChilds = (node) => {
+	while (node.firstChild) {
+		node.removeChild(node.lastChild);
+	}
 };
 const pokeApi = async (a, b) => {
 	loadingAnimationAdd();
@@ -204,4 +289,3 @@ const pokeApi = async (a, b) => {
 };
 
 pokeApi(1, 151);
-
