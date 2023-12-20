@@ -117,7 +117,7 @@ const pintarPokemon = (pokemonPintar) => {
 			span2$$.appendChild(p2$$);
 		}
 		li$$.addEventListener("click", () => {
-			const myModal$$ =document.querySelector('.modal')
+			const myModal$$ = document.querySelector(".modal");
 			const popUpContainer = document.querySelector(".popUpContainer");
 
 			deleteAllChilds(popUpContainer);
@@ -132,10 +132,11 @@ const pintarPokemon = (pokemonPintar) => {
 			const pokedexPeso = document.createElement("p");
 			const pokedexFlavor = document.createElement("p");
 			const closeIcon = document.createElement("button");
+			let myChart = document.createElement("canvas");
 
 			pokedexH2.textContent = "Pokedex";
 			closeIcon.textContent = "×";
-			closeIcon.classList.add('popUpContainer__close')
+			closeIcon.classList.add("popUpContainer__close");
 			pokedexNameIdContainer.classList.add("popUpContainer-nameId");
 			pokedexId.textContent = `Nº ${item.id}`;
 			pokedexH4.textContent = item.name;
@@ -148,23 +149,59 @@ const pintarPokemon = (pokemonPintar) => {
 			let pesoEnKg = (item.peso / 10).toFixed(1);
 			pokedexPeso.textContent = `Peso: ${pesoEnKg} Kg.`;
 			pokedexPeso.classList.add("popUpContainer__weight");
-			let changedFlavorText  = item.flavorText.replace('', " ")
-			pokedexFlavor.textContent = changedFlavorText
+			let changedFlavorText = item.flavorText.replace("", " ");
+			pokedexFlavor.textContent = changedFlavorText;
 			pokedexFlavor.classList.add("popUpContainer__flavor");
 
 			popUpContainer.appendChild(pokedexH2);
-			popUpContainer.appendChild(closeIcon)
+			popUpContainer.appendChild(closeIcon);
 			popUpContainer.appendChild(pokedexNameIdContainer);
 			pokedexNameIdContainer.appendChild(pokedexId);
 			pokedexNameIdContainer.appendChild(pokedexH4);
 			popUpContainer.appendChild(pokedexAltura);
 			popUpContainer.appendChild(pokedexPeso);
+
+			popUpContainer.appendChild(myChart);
 			popUpContainer.appendChild(pokedexSprite);
 			popUpContainer.appendChild(pokedexFlavor);
+			let allStats = [];
+			let allBaseStats = [];
+			item.stats.forEach((item) => {
+				allStats.push(item.stat.name.toUpperCase());
+				allBaseStats.push(item.base_stat);
+			});
+			console.log(allStats, allBaseStats);
+
+			myChart.setAttribute("id", "myChart");
+			myChart.classList.add("popUpContainer__graph");
+			const graph = new Chart("myChart", {
+				type: "radar",
+				data: {
+					labels: allStats,
+					datasets: [
+						{
+							label: item.name.toUpperCase(),
+							data: allBaseStats,
+							backgroundColor: ["rgba(255, 0, 0,0.1)"],
+							borderColor: ["black"],
+							borderWidth: 1,
+							pointRadius: 3,
+						},
+					],
+				},
+				options: {
+					responsive: false,
+					scale: {
+						ticks: {
+							beginAtZero: true,
+							max:255,
+						  }
+					},
+				},
+			});
 
 			closeIcon.addEventListener("click", () => {
-				myModal$$.classList.remove("popup-visible")
-
+				myModal$$.classList.remove("popup-visible");
 			});
 		});
 	});

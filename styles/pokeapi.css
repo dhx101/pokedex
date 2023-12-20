@@ -12,8 +12,7 @@
 .header__title {
   grid-column-start: 1;
   grid-column-end: 4;
-  background-color: #ff0000;
-  padding: 5vh 0;
+  padding: 5vh 0 0 0;
 }
 .header-gen {
   text-align: center;
@@ -27,7 +26,7 @@
   padding: 10px 25px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 15px;
-  background-color: #9f9f9f;
+  background-color: #1d1d1d;
 }
 .header-gen__dropdown:hover {
   background-color: #5f5f5f;
@@ -64,7 +63,7 @@
   padding: 10px 25px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 15px;
-  background-color: #9f9f9f;
+  background-color: #1d1d1d;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
@@ -400,6 +399,7 @@ span {
   border: 5px solid rgba(0, 0, 0, 0.2);
   border-radius: 15px;
   font-weight: 700;
+  width: 80%;
 }
 .popUpContainer h2 {
   display: flex;
@@ -445,6 +445,17 @@ span {
   grid-row-start: 4;
   grid-row-end: 5;
 }
+.popUpContainer__graph {
+  box-sizing: content-box;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 5;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 15px;
+}
 .popUpContainer__sprite {
   height: 100%;
   max-height: 300px;
@@ -456,10 +467,15 @@ span {
 .popUpContainer__flavor {
   display: flex;
   margin: auto;
-  border: 1px solid rgba(0, 0, 0, 0.2);
   grid-column-start: 1;
   grid-column-end: 4;
   padding: 0 10vw;
+}
+.popUpContainer img:hover {
+  animation: bounce 0.5s linear;
+}
+.popUpContainer__graph {
+  height: 200px;
 }
 
 .modal {
@@ -477,6 +493,7 @@ span {
 
 .popup-visible {
   display: block;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 * {
@@ -490,8 +507,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: orangered;
-  margin: 0;
+  background-color: rgb(200, 30, 0);
   font-family: rubik;
   color: white;
 }/*# sourceMappingURL=pokeapi.css.map */

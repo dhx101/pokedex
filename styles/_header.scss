@@ -12,8 +12,7 @@
 	&__title {
 		grid-column-start: 1;
 		grid-column-end: 4;
-		background-color: #ff0000;
-		padding: 5vh 0;
+		padding: 5vh 0 0 0;
 	}
 	&-gen {
 		text-align: center;
@@ -24,7 +23,7 @@
 			padding: 10px 25px;
 			border: 1px solid rgba($color: #000000, $alpha: 0.2);
 			border-radius: 15px;
-			background-color: #9f9f9f;
+			background-color: #1d1d1d;
 			&:hover {
 				background-color: #5f5f5f;
 			}
@@ -57,7 +56,7 @@
 			padding: 10px 25px;
 			border: 1px solid rgba($color: #000000, $alpha: 0.2);
 			border-radius: 15px;
-			background-color: #9f9f9f;
+			background-color: #1d1d1d;
 			user-select: none;
 			cursor: pointer;
 			&:hover {
