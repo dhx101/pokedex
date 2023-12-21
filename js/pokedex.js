@@ -90,12 +90,12 @@ const pintarPokemon = (pokemonPintar) => {
 
 		div$$.classList.add("type");
 
-		i1$$.setAttribute("src", `./${item.type[0]}.svg`);
+		i1$$.setAttribute("src", `../svg/${item.type[0]}.svg`);
 		i1$$.setAttribute("alt", item.type[0]);
 		p1$$.textContent = item.type[0];
 		p1$$.classList.add("card-subtitle");
 
-		i2$$.setAttribute("src", `./${item.type[1]}.svg`);
+		i2$$.setAttribute("src", `../svg/${item.type[1]}.svg`);
 		i2$$.setAttribute("alt", item.type[1]);
 		p2$$.textContent = item.type[1];
 		p2$$.classList.add("card-subtitle");
@@ -258,7 +258,7 @@ const generateTypeSelector = (pokemonArray) => {
 		const myImg$$ = document.createElement("img");
 		const myP$$ = document.createElement("p");
 
-		myImg$$.setAttribute("src", `./${types[i]}.svg`);
+		myImg$$.setAttribute("src", `../svg/${types[i]}.svg`);
 		myLi$$.classList.add(types[i]);
 		myLi$$.classList.add("header-type-list__item");
 		myP$$.textContent = types[i];
