@@ -66,7 +66,7 @@ const getInfo = async (a, b) => {
 };
 
 const myOl = document.querySelector("#pokedex");
-
+// Pintar tanto las tarjetas como el modal
 const pintarPokemon = (pokemonPintar) => {
 	// console.log(pokemonPintar);
 	pokemonPintar.forEach((item) => {
@@ -111,11 +111,13 @@ const pintarPokemon = (pokemonPintar) => {
 
 		span1$$.appendChild(i1$$);
 		span1$$.appendChild(p1$$);
+
 		if (item.type[1] != undefined) {
 			div$$.appendChild(span2$$);
 			span2$$.appendChild(i2$$);
 			span2$$.appendChild(p2$$);
 		}
+
 		li$$.addEventListener("click", () => {
 			const myModal$$ = document.querySelector(".modal");
 			const popUpContainer = document.querySelector(".popUpContainer");
@@ -134,8 +136,8 @@ const pintarPokemon = (pokemonPintar) => {
 			const closeIcon = document.createElement("button");
 			let myChart = document.createElement("canvas");
 
-			pokedexH2.textContent = "Pokedex";
 			closeIcon.textContent = "×";
+			pokedexH2.textContent = "Pokedex";
 			closeIcon.classList.add("popUpContainer__close");
 			pokedexNameIdContainer.classList.add("popUpContainer-nameId");
 			pokedexId.textContent = `Nº ${item.id}`;
@@ -144,17 +146,17 @@ const pintarPokemon = (pokemonPintar) => {
 			pokedexSprite.setAttribute("alt", item.name);
 			pokedexSprite.classList.add("popUpContainer__sprite");
 			let alturaEnMetros = Math.round(item.altura).toFixed(1);
-			pokedexAltura.textContent = `Altura: ${alturaEnMetros} m.`;
+			pokedexAltura.textContent = `Height: ${alturaEnMetros} m.`;
 			pokedexAltura.classList.add("popUpContainer__height");
 			let pesoEnKg = (item.peso / 10).toFixed(1);
-			pokedexPeso.textContent = `Peso: ${pesoEnKg} Kg.`;
+			pokedexPeso.textContent = `Weight: ${pesoEnKg} Kg.`;
 			pokedexPeso.classList.add("popUpContainer__weight");
 			let changedFlavorText = item.flavorText.replace("", " ");
 			pokedexFlavor.textContent = changedFlavorText;
 			pokedexFlavor.classList.add("popUpContainer__flavor");
 
-			popUpContainer.appendChild(pokedexH2);
 			popUpContainer.appendChild(closeIcon);
+			popUpContainer.appendChild(pokedexH2);
 			popUpContainer.appendChild(pokedexNameIdContainer);
 			pokedexNameIdContainer.appendChild(pokedexId);
 			pokedexNameIdContainer.appendChild(pokedexH4);
@@ -194,8 +196,8 @@ const pintarPokemon = (pokemonPintar) => {
 					scale: {
 						ticks: {
 							beginAtZero: true,
-							max:255,
-						  }
+							max: 255,
+						},
 					},
 				},
 			});
@@ -206,12 +208,13 @@ const pintarPokemon = (pokemonPintar) => {
 		});
 	});
 };
-
+// Eliminar pokemons
 const deletePokedex = () => {
 	while (myOl.firstChild) {
 		myOl.removeChild(myOl.lastChild);
 	}
 };
+//Generar selector de generaciones
 const generateGenSelector = () => {
 	const myDiv$$ = document.querySelector(".header-gen");
 	deleteAllChilds(myDiv$$);
@@ -239,6 +242,7 @@ const generateGenSelector = () => {
 		myList$$.classList.toggle("list-visible-gen");
 	});
 };
+//Generar selector de tipos
 const generateTypeSelector = (pokemonArray) => {
 	const myDiv$$ = document.querySelector(".header-type");
 	deleteAllChilds(myDiv$$);
@@ -280,6 +284,7 @@ const generateTypeSelector = (pokemonArray) => {
 		myList$$.classList.toggle("list-visible-type");
 	});
 };
+//Generar input de nombres
 const generateInput = (pokemon) => {
 	const myDiv$$ = document.querySelector(".header-search");
 	deleteAllChilds(myDiv$$);
@@ -300,6 +305,7 @@ const generateInput = (pokemon) => {
 		pintarPokemon(filteredPokemon);
 	});
 };
+// Animacion Pokeball
 const loadingAnimationAdd = () => {
 	const pokeball = document.querySelector(".pokeball");
 	pokeball.classList.add("visible");
@@ -325,4 +331,34 @@ const pokeApi = async (a, b) => {
 	generateInput(pokemon);
 };
 
+let goToTopBtn = document.querySelector("#goToTop");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = () => {
+	if (
+		document.body.scrollTop > 20 ||
+		document.documentElement.scrollTop > 20
+	) {
+		goToTopBtn.style.display = "block";
+	} else {
+		goToTopBtn.style.display = "none";
+	}
+};
+
+function scrollFunction() {
+	if (
+		document.body.scrollTop > 20 ||
+		document.documentElement.scrollTop > 20
+	) {
+		mybutton.style.display = "block";
+	} else {
+		mybutton.style.display = "none";
+	}
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
 pokeApi(1, 151);

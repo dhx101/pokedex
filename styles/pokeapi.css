@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "GameBoy Advanced";
+  src: url(../fonts/Pokemon\ GB.ttf);
+}
 .selector {
   position: relative;
   display: flex;
@@ -8,6 +12,8 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
+  align-items: center;
+  justify-items: center;
 }
 .header__title {
   grid-column-start: 1;
@@ -107,21 +113,35 @@
 }
 .header-search {
   display: flex;
+  text-align: center;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 5px;
   height: 40px;
   padding: 5vh 5vw;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background-color: #1d1d1d;
 }
 
 .list-visible-type {
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   position: absolute;
   background-color: #9f9f9f;
   z-index: 100;
+}
+@media only screen and (min-width: 1024px) {
+  .list-visible-type {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .list-visible-type {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .list-visible-gen {
@@ -207,16 +227,17 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 20px;
+  padding: 5vh 0;
 }
 @media only screen and (min-width: 425px) {
   #pokedex {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
   }
 }
 
 .card-subtitle {
   color: white;
-  font-family: "Fira Sans", sans-serif;
+  font-family: "GameBoy Advanced", sans-serif;
   text-transform: uppercase;
 }
 
@@ -230,10 +251,11 @@
   display: flex;
   gap: 10px;
   padding: 10px 16px;
-  min-width: 100px;
-  max-width: 120px;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 .type span img {
   width: 15px;
@@ -242,7 +264,6 @@
 .container {
   padding: 40px;
   margin: 0 auto;
-  background: rgb(0, 0, 0);
   min-width: 100vh;
 }
 
@@ -260,6 +281,7 @@ h1 {
   text-align: center;
   border: 5px solid rgba(0, 0, 0, 0.2);
   border-radius: 15px;
+  cursor: pointer;
 }
 .card:hover {
   animation: bounce 0.5s linear;
@@ -363,10 +385,10 @@ span {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: auto;
   background-color: rgb(200, 200, 200);
   height: 10vh;
   width: 100%;
+  position: fixed;
   bottom: 0px;
 }
 .footer-info {
@@ -381,25 +403,31 @@ span {
 }
 
 .popUpContainer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 2fr 1fr 1fr 1fr 2fr;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   z-index: 100;
+  gap: 5px;
   position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   overflow: hidden;
   background-color: #f4f4f4;
   color: black;
   text-align: center;
   align-items: center;
   padding: 20px 20px;
-  border: 5px solid rgba(0, 0, 0, 0.2);
+  border: 25px solid rgba(0, 0, 0, 0.5);
   border-radius: 15px;
   font-weight: 700;
-  width: 80%;
+  width: 60%;
+}
+@media only screen and (min-width: 1440px) {
+  .popUpContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 2fr 1fr 1fr 1fr 2fr;
+    justify-items: center;
+  }
 }
 .popUpContainer h2 {
   display: flex;
@@ -423,8 +451,7 @@ span {
   justify-content: center;
   align-items: center;
   background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
+  padding: 5px;
   border: 1px solid #888;
   width: 10%;
   border-radius: 10px;
@@ -432,6 +459,12 @@ span {
   grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 2;
+  cursor: pointer;
+}
+@media only screen and (min-width: 1440px) {
+  .popUpContainer__close {
+    padding: 20px;
+  }
 }
 .popUpContainer__height {
   grid-column-start: 1;
@@ -455,10 +488,10 @@ span {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 15px;
+  height: 200px;
 }
 .popUpContainer__sprite {
   height: 100%;
-  max-height: 300px;
   grid-column-start: 3;
   grid-column-end: 4;
   grid-row-start: 2;
@@ -474,26 +507,28 @@ span {
 .popUpContainer img:hover {
   animation: bounce 0.5s linear;
 }
-.popUpContainer__graph {
-  height: 200px;
-}
 
 .modal {
   display: none;
   position: fixed;
+  justify-content: center;
+  align-items: center;
   z-index: 1;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .popup-visible {
-  display: block;
-  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 * {
@@ -507,7 +542,27 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: rgb(200, 30, 0);
-  font-family: rubik;
+  min-width: 100vw;
+  background-color: #7B0002;
+  font-family: "GameBoy Advanced", sans-serif;
   color: white;
+}
+
+#goToTop {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: rgb(155, 0, 0); /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+#goToTop:hover {
+  background-color: #555;
 }/*# sourceMappingURL=pokeapi.css.map */

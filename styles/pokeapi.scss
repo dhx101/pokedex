@@ -1,8 +1,13 @@
+@font-face {
+	font-family: "GameBoy Advanced";
+	src: url(../fonts/Pokemon\ GB.ttf);
+}
 $color_1: white;
 $color_2: #222;
 $font-family_1: rubik;
 $font-family_2: "Fira Sans", sans-serif;
-$background-color_1: orangered;
+$font-family_3: "GameBoy Advanced", sans-serif;
+$background-color_1:  	#7B0002;
 $background-color_2: #f4f4f4;
 
 @import "./header";
@@ -11,6 +16,10 @@ $background-color_2: #f4f4f4;
 @import "./types";
 @import "./footer";
 @import "./popup";
+
+html {
+	scroll-behavior: smooth;
+  }
 * {
     padding: 0;
     margin: 0;
@@ -21,10 +30,28 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	background-color: rgb(200, 30, 0);
-	font-family: $font-family_1;
+	min-width: 100vw;
+	background-color: $background-color_1;
+	font-family: $font-family_3;
 	color: $color_1;
 }
 
-
+#goToTop {
+	display: none; /* Hidden by default */
+	position: fixed; /* Fixed/sticky position */
+	bottom: 20px; /* Place the button at the bottom of the page */
+	right: 30px; /* Place the button 30px from the right */
+	z-index: 99; /* Make sure it does not overlap */
+	border: none; /* Remove borders */
+	outline: none; /* Remove outline */
+	background-color: rgb(155, 0, 0); /* Set a background color */
+	color: white; /* Text color */
+	cursor: pointer; /* Add a mouse pointer on hover */
+	padding: 15px; /* Some padding */
+	border-radius: 10px; /* Rounded corners */
+	font-size: 18px; /* Increase font size */
+	&:hover {
+		background-color: #555;
+	}
+}
 

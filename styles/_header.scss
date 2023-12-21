@@ -8,7 +8,8 @@
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 15px;
-
+	align-items: center;
+	justify-items: center;
 	&__title {
 		grid-column-start: 1;
 		grid-column-end: 4;
@@ -90,27 +91,38 @@
 				img {
 					width: 15px;
 				}
+				
 			}
 		}
 	}
 	&-search {
 		display: flex;
+		text-align: center;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		gap: 5px;
 		height: 40px;
 		padding: 5vh 5vw;
+			border: 1px solid rgba($color: #000000, $alpha: 0.2);
+			border-radius: 15px;
+			background-color: #1d1d1d;
 	}
 }
 
 .list-visible-type {
 	display: grid;
 	gap: 10px;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(2, 1fr);
 	position: absolute;
 	background-color: #9f9f9f;
 	z-index: 100;
+	@media only screen and (min-width:(1024px)) {
+		grid-template-columns: repeat(3, 1fr);		
+	}
+	@media only screen and (min-width:(1440px)) {
+		grid-template-columns: repeat(4, 1fr);		
+	}
 }
 .list-visible-gen {
 	display: grid;

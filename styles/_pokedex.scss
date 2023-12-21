@@ -27,14 +27,15 @@
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-gap: 20px;
+	padding: 5vh 0;
 	@media only screen and (min-width: 425px) {
-		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
 
 	}
 }
 .card-subtitle {
 	color: $color_1;
-	font-family: $font-family_2;
+	font-family: $font-family_3;
 	text-transform: uppercase;
 }
 .type {
@@ -46,10 +47,9 @@
 		display: flex;
 		gap: 10px;
 		padding: 10px 16px;
-		min-width: 100px;
-		max-width: 120px;
 		border-radius: 5px;
 		border: 1px solid rgba(0, 0, 0, 0.2);
+		user-select: none;
 		img {
 			width: 15px;
 		}
@@ -59,7 +59,6 @@
 .container {
 	padding: 40px;
 	margin: 0 auto;
-	background: rgb(0, 0, 0);
 	min-width: 100vh;
 }
 h1 {
@@ -75,6 +74,7 @@ h1 {
 	text-align: center;
 	border: 5px solid rgba(0, 0, 0, 0.2);
 	border-radius: 15px;
+	cursor: pointer;
 	&:hover {
 		animation: bounce 0.5s linear;
 		.card-image {
