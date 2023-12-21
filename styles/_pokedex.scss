@@ -57,18 +57,17 @@
 }
 
 .container {
-	padding: 40px;
+	padding: 10%;
 	margin: 0 auto;
-	min-width: 100vh;
 }
 h1 {
 	text-transform: uppercase;
 	text-align: center;
-	font-size: 54px;
+	font-size: 2rem;
 }
 .card {
 	list-style: none;
-	padding: 40px;
+	padding: 10%;
 	background-color: $background-color_2;
 	color: $color_2;
 	text-align: center;
@@ -83,7 +82,7 @@ h1 {
 	}
 	&-title {
 		text-transform: uppercase;
-		font-size: 32px;
+		font-size: 1.5rem;
 		font-weight: normal;
 		margin-bottom: 0;
 	}
