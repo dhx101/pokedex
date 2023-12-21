@@ -387,22 +387,23 @@ span {
 }
 
 .footer {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
   align-items: center;
+  justify-content: center;
   background-color: rgb(200, 200, 200);
-  height: 10vh;
+  padding: 2.5vh 2.5vw;
   width: 100%;
   position: fixed;
   bottom: 0px;
 }
 .footer-info {
   color: black;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 .footer-info a {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: black;
   font-weight: 700;
 }
