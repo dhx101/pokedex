@@ -249,8 +249,7 @@
 
 .type {
   display: flex;
-  justify-content: space-around;
-  padding: 0 25%;
+  justify-content: center;
   gap: 25%;
 }
 .type span {
